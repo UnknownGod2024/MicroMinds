@@ -192,7 +192,7 @@ export function Content() {
       // Navbar Active Indicator (GSAP ScrollTrigger for each section)
       const navLinks = document.querySelectorAll('.nav-link');
       const sections = gsap.utils.toArray('section');
-      sections.forEach((sec: any, i: number) => {
+      sections.forEach((sec: any) => {
         ScrollTrigger.create({
           trigger: sec,
           start: 'top center',
@@ -249,7 +249,7 @@ export function Content() {
     });
   };
 
-  const [hoveredEco, setHoveredEco] = useState<string | null>(null);
+
 
   return (
     <div ref={containerRef} style={{ backgroundColor: '#040D14', color: '#F8FAFC' }}>

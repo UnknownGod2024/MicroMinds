@@ -13,7 +13,7 @@ export interface Department {
   subHeads: TeamMember[];
 }
 
-export const faculty = {
+export const faculty: TeamMember = {
   name: "Dr. Poonam Kadam",
   role: "Incharge Faculty Member",
   image: "/team/Dr_Poonam_Kadam.jpeg"
@@ -98,7 +98,7 @@ export const departments: Department[] = [
       { name: "Varad Bhandari", role: "Research Head", image: "/team/Varad_Bhandari.png", linkedin: "https://linkedin.com/in/varad-bhandari-9a9971331" }
     ],
     subHeads: [
-      { name: "Dhruv Balsara", role: "Sub Head", image: "/team/research_sub_1.jpg", linkedin: "https://linkedin.com/in/dhruvbalsara-djsce" }
+      { name: "Dhruv Balsara", role: "Sub Head", image: "/team/Dhruv_Balsara.jpg", linkedin: "https://linkedin.com/in/dhruvbalsara-djsce" }
     ]
   },
   {

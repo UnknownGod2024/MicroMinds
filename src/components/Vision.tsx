@@ -376,7 +376,7 @@ export function Vision() {
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', borderLeft: '2px solid rgba(36, 184, 168, 0.2)', paddingLeft: '2rem' }}>
-                {['LEARNING', 'SKILLS', 'PROJECTS', 'EXPERIENCE'].map((step, i) => (
+                {['LEARNING', 'SKILLS', 'PROJECTS', 'EXPERIENCE'].map((step) => (
                   <div key={step} className="p4-prog-item" style={{ fontSize: '1.25rem', fontWeight: 500, color: '#718096', position: 'relative' }}>
                     <div style={{ position: 'absolute', left: '-2.45rem', top: '50%', transform: 'translateY(-50%)', width: '10px', height: '10px', borderRadius: '50%', background: '#24B8A8' }}></div>
                     {step}

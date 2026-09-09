@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { faculty, leadership, departments, type TeamMember } from '../data/team';
+import { faculty, leadership, departments } from '../data/team';
 
 gsap.registerPlugin(ScrollTrigger);
 
