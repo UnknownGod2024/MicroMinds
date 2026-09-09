@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -60,6 +61,24 @@ export const Projects = () => {
   return (
     <div ref={containerRef} style={{ backgroundColor: '#040D14', color: '#F8FAFC', minHeight: '100vh', overflowX: 'hidden' }}>
       
+      {/* NAVIGATION */}
+      <nav className="navbar" id="navbar">
+        <div className="logo title-font" style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img src="/logo_2.png" alt="MicroMinds Logo" style={{ height: '64px' }} />
+          <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', lineHeight: 1.2 }}>DJS MICROMINDS<br/><span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>VLSI CLUB</span></div>
+        </div>
+        <div className="nav-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/vision" className="nav-link">Vision</Link>
+          <Link to="/projects" className="nav-link nav-active" style={{ position: 'relative' }}>
+            Projects
+            <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '100%', height: '2px', background: 'var(--color-teal)' }}></span>
+          </Link>
+          <Link to="/events" className="nav-link">Events</Link>
+          <Link to="/team" className="nav-link">Team</Link>
+        </div>
+      </nav>
+
       {/* 1. PAGE HERO */}
       <section style={{ padding: '12rem 4rem 8rem 4rem', position: 'relative', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         {/* Subtle background lines */}
