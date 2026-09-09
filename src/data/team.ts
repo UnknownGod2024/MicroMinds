@@ -62,7 +62,7 @@ export const departments: Department[] = [
       { name: "Swayam Pandya", role: "Technical Head", image: "/team/Swayam%20Pandya%20.png", linkedin: "https://linkedin.com/in/swayam-pandya-902b8542b" }
     ],
     subHeads: [
-      { name: "Hriday Hablani", role: "Sub Head", image: "/team/Hriday%20Hablani%20MM.png" },
+      { name: "Hriday Hablani", role: "Sub Head", image: "/team/Hriday%20Hablani%20MM.png", linkedin: "https://www.linkedin.com/in/hriday-hablani-2100482a8/" },
       { name: "Shrutak Reddy", role: "Sub Head", image: "/team/ShrutakReddy.png", linkedin: "https://linkedin.com/in/shrutak-reddy-902b5742b" }
     ]
   },
@@ -76,7 +76,7 @@ export const departments: Department[] = [
     ],
     subHeads: [
       { name: "Samuel Gonsalves", role: "Sub Head", image: "/team/Samuel_Gonsalves.png", linkedin: "https://linkedin.com/in/samuel-gonsalves-a04608346" },
-      { name: "Soham Chopade", role: "Sub Head", image: "/team/Soham%20Chopade.png" }
+      { name: "Soham Chopade", role: "Sub Head", image: "/team/Soham%20Chopade.png", linkedin: "https://www.linkedin.com/in/soham-chopade-4870a8419?utm_source=share_via&utm_content=profile&utm_medium=member_android" }
     ]
   },
   {
