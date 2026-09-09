@@ -483,7 +483,7 @@ export function Content() {
             {/* Column 2 - USEFUL LINKS */}
             <div className="footer-col-links">
               <h4 className="footer-inst-title text-teal">USEFUL LINKS</h4>
-              <nav className="flex flex-col gap-3">
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <Link to="/" className="inst-link">Home</Link>
                 <Link to="/vision" className="inst-link">Vision</Link>
                 <Link to="/projects" className="inst-link">Projects</Link>
@@ -495,7 +495,7 @@ export function Content() {
             {/* Column 3 - FOLLOW US */}
             <div className="footer-col-social">
               <h4 className="footer-inst-title text-teal">FOLLOW US</h4>
-              <nav className="flex flex-col gap-4">
+              <nav style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <a href="https://www.instagram.com/djs.microminds?stkn=dXlzbGxqNWZmZ20y" target="_blank" rel="noopener noreferrer" className="inst-social-link">
                   <Instagram /> Instagram
                 </a>
