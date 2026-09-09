@@ -145,8 +145,9 @@ export const Projects = () => {
           <text x="150" y="760" fill="#94A3B8" fontSize="12" textAnchor="middle">INT4 / INT8 / INT16</text>
 
           <rect className="node-param" x="280" y="700" width="200" height="80" rx="4" fill="#040D14" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-          <text x="380" y="735" fill="#FFF" fontSize="16" fontWeight="700" textAnchor="middle">PE ARRAY</text>
-          <text x="380" y="760" fill="#94A3B8" fontSize="12" textAnchor="middle">WORKLOAD-ADAPTIVE CONFIGURATION</text>
+          <text x="380" y="730" fill="#FFF" fontSize="16" fontWeight="700" textAnchor="middle">PE ARRAY</text>
+          <text x="380" y="752" fill="#94A3B8" fontSize="11" textAnchor="middle">WORKLOAD-ADAPTIVE</text>
+          <text x="380" y="768" fill="#94A3B8" fontSize="11" textAnchor="middle">CONFIGURATION</text>
 
           <rect className="node-param" x="520" y="700" width="200" height="80" rx="4" fill="#040D14" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
           <text x="620" y="735" fill="#FFF" fontSize="16" fontWeight="700" textAnchor="middle">DATAFLOW</text>
