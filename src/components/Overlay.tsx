@@ -13,7 +13,6 @@ export function Overlay() {
           <a className="nav-link">Projects</a>
           <a className="nav-link">Events</a>
           <a className="nav-link">Team</a>
-          <a className="nav-link">Connect</a>
         </div>
       </nav>
 

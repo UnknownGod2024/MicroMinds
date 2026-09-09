@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
-import { SignalWaveform } from './SemiconductorGraphics';
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
@@ -44,8 +44,6 @@ export function Content() {
     }, 2000);
   };
 
-  const connectRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     let ctx = gsap.context(() => {
       
@@ -62,7 +60,7 @@ export function Content() {
         });
       }
       
-      // EXACT TIMELINE COORDINATION (TOTAL <= 1.6s)
+      // HERO ENTRANCE TIMELINE
       const tl = gsap.timeline({
         onComplete: () => {
           document.querySelectorAll('.text-mask-wrapper').forEach(el => {
@@ -76,106 +74,108 @@ export function Content() {
       tl.fromTo('#bg-path-2', { strokeDashoffset: 1500 }, { strokeDashoffset: 0, duration: 1.5, ease: 'power3.out' }, 0.15);
       // 0.30s — 3D chip reveals
       tl.fromTo(chipRef.current, { opacity: 0, scale: 0.9, y: 50 }, { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: 'power3.out' }, 0.30);
-      // 0.60s — DJS MICROMINDS reveals (navbar)
-      tl.fromTo('.navbar', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 0.60);
-      // 0.75s — IDEAS reveals
-      tl.from('.mask-ideas', { y: '100%', duration: 1, ease: 'power4.out' }, 0.75);
-      // 0.90s — INTO reveals
-      tl.from('.mask-into', { y: '100%', duration: 1, ease: 'power4.out' }, 0.90);
-      // 1.05s — SILICON. reveals
-      tl.from('.mask-silicon', { y: '100%', duration: 1, ease: 'power4.out' }, 1.05);
-      // 1.20s — description reveals
+      // 0.65s — IDEAS reveals
+      tl.from('.mask-ideas', { y: '100%', duration: 1, ease: 'power4.out' }, 0.65);
+      // 0.80s — INTO reveals
+      tl.from('.mask-into', { y: '100%', duration: 1, ease: 'power4.out' }, 0.80);
+      // 0.95s — SILICON. reveals
+      tl.from('.mask-silicon', { y: '100%', duration: 1, ease: 'power4.out' }, 0.95);
+      // 1.15s — description appears
       tl.to('.hero-desc-typewriter', {
         text: "A student-driven VLSI community<br/>building ideas, exploring technology<br/>and creating a stronger tomorrow.",
-        duration: 2,
+        duration: 1.5,
         ease: 'none'
-      }, 1.20);
-      // 1.35s — buttons reveal
-      tl.fromTo('.magnetic-wrap', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' }, 1.35);
+      }, 1.15);
+      // 1.30s — buttons reveal
+      tl.fromTo('.magnetic-wrap', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' }, 1.30);
 
-      // Ambient Chip Sweep (every 8 seconds)
+      // Ambient Chip Sweep
       gsap.fromTo('.chip-sweep', 
         { x: '-100%' }, 
         { x: '200%', duration: 1.5, ease: 'power2.inOut', repeat: -1, repeatDelay: 8 }
       );
 
+      // --- WHAT WE DO SCROLL REVEALS ---
+      gsap.utils.toArray('.editorial-row').forEach((row: any) => {
+        const num = row.querySelector('.editorial-number');
+        const title = row.querySelector('.editorial-title');
+        const desc = row.querySelector('.editorial-desc');
+        const line = row.querySelector('.editorial-line');
+        const signal = row.querySelector('.editorial-signal');
 
-      // Navbar Scroll Effect
-      ScrollTrigger.create({
-        start: 'top -50',
-        onUpdate: (self) => {
-          const nav = document.getElementById('navbar');
-          if (!nav) return;
-          if (self.direction === 1) {
-            nav.classList.add('scrolled');
-          } else if (self.progress === 0) {
-            nav.classList.remove('scrolled');
-          }
-          
-          // Background Color Detection for Navbar text color
-          const scrollY = window.scrollY;
-          const introTop = document.getElementById('intro')?.offsetTop || 0;
-          const visionTop = document.getElementById('vision')?.offsetTop || 0;
-          const projectsTop = document.getElementById('projects')?.offsetTop || 0;
-          const eventsTop = document.getElementById('events')?.offsetTop || 0;
-          const teamTop = document.getElementById('team')?.offsetTop || 0;
-          const facultyTop = document.getElementById('faculty')?.offsetTop || 0;
-          const connectTop = document.getElementById('connect')?.offsetTop || 0;
-          
-          const isLight = (scrollY >= introTop && scrollY < visionTop) || 
-                          (scrollY >= projectsTop && scrollY < eventsTop) ||
-                          (scrollY >= teamTop && scrollY < facultyTop) ||
-                          (scrollY >= facultyTop && scrollY < connectTop);
-
-          if (isLight) {
-            nav.classList.add('light-mode');
-            nav.style.color = '#0F172A';
-          } else {
-            nav.classList.remove('light-mode');
-            nav.style.color = '#F8FAFC';
-          }
-        }
-      });
-
-      // Subtle Parallax for Large Graphics
-      gsap.utils.toArray<HTMLElement>('.parallax-graphic').forEach(el => {
-        gsap.to(el, {
-          y: -100,
-          ease: "none",
+        const rowTl = gsap.timeline({
           scrollTrigger: {
-            trigger: el.parentElement,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true
+            trigger: row,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
           }
         });
+
+        rowTl.fromTo(num, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6, ease: "power2.out" })
+             .fromTo(title, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6, ease: "power2.out" }, "-=0.4")
+             .fromTo(desc, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.4")
+             .to(line, { width: "100%", duration: 1, ease: "power3.inOut" }, "-=0.2")
+             .fromTo(signal, { x: 0, opacity: 1 }, { x: "100vw", opacity: 0, duration: 1.5, ease: "power2.in" }, "-=0.8");
       });
 
-      // Connect Section Tapeout
-      if (connectRef.current) {
-        gsap.to('.tapeout-path', {
-          strokeDashoffset: 0,
-          scrollTrigger: {
-            trigger: connectRef.current,
-            start: 'top 70%',
-            end: 'center center',
-            scrub: true
-          }
-        });
-        
-        gsap.fromTo('.tapeout-text',
-          { opacity: 0, scale: 0.9 },
+      // --- STATS COUNT UP ---
+      const stats = gsap.utils.toArray('.stats-val');
+      stats.forEach((stat: any) => {
+        const target = parseInt(stat.getAttribute('data-target') || '0', 10);
+        if (isNaN(target)) return;
+        gsap.fromTo(stat, 
+          { innerHTML: 0 }, 
           {
-            opacity: 1,
-            scale: 1,
+            innerHTML: target,
+            duration: 2,
+            ease: "power2.out",
             scrollTrigger: {
-              trigger: connectRef.current,
-              start: 'center 60%',
-              toggleActions: 'play none none reverse'
-            }
+              trigger: stat.parentElement,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            },
+            snap: { innerHTML: 1 }
           }
         );
-      }
+      });
+
+      // --- EVENT PROMO ---
+      const eventTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#event-promo",
+          start: "top 75%",
+          toggleActions: "play none none reverse"
+        }
+      });
+      eventTl.fromTo('.event-giant-date', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1, ease: "power4.out" })
+             .fromTo('.event-title-1', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.5")
+             .fromTo('.event-title-2', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.3")
+             .fromTo('.event-circuit', { strokeDashoffset: 1000 }, { strokeDashoffset: 0, duration: 1.5, ease: "power2.out" }, "-=0.2")
+             .fromTo('.event-desc', { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=1.0")
+             .fromTo('.event-btn', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, "-=0.8");
+
+      // --- TEAM PHOTO ---
+      gsap.fromTo('.team-scanline', 
+        { y: 0, opacity: 1 }, 
+        { 
+          y: '80vh', 
+          opacity: 0, 
+          duration: 2, 
+          ease: "none", 
+          scrollTrigger: {
+            trigger: ".team-photo-container",
+            start: "top center",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      gsap.fromTo('.team-heading',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".team-heading", start: "top 85%" } }
+      );
+
+      // --- ECOSYSTEM HOVER (Vanilla JS logic in React) ---
 
       // Global Continuous Signal Line
       gsap.to('.global-signal-path', {
@@ -189,54 +189,22 @@ export function Content() {
         }
       });
 
-      // Scroll Reveals for Sections (Coordinated Groups)
-      const sections = gsap.utils.toArray('section:not(#hero)');
-      sections.forEach((sec: any) => {
-        const title = sec.querySelector('.section-title');
-        const content = sec.querySelectorAll('.grid-col, .project-card, .event-photo');
-        
-        const stl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sec,
-            start: 'top 75%',
-            toggleActions: 'play none none none'
-          }
-        });
-        
-        if (title) {
-          stl.fromTo(title, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' });
-        }
-        if (content.length) {
-          stl.fromTo(content, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 1, stagger: 0.1, ease: 'power3.out' }, "-=0.4");
-        }
-      });
-
       // Navbar Active Indicator (GSAP ScrollTrigger for each section)
       const navLinks = document.querySelectorAll('.nav-link');
+      const sections = gsap.utils.toArray('section');
       sections.forEach((sec: any, i: number) => {
         ScrollTrigger.create({
           trigger: sec,
           start: 'top center',
           end: 'bottom center',
           onToggle: (self) => {
-            if (self.isActive && navLinks[i+1]) { // +1 because hero is first
+            // Very simplistic active state
+            if (self.isActive && navLinks[0]) { 
               navLinks.forEach(link => link.classList.remove('nav-active'));
-              navLinks[i+1].classList.add('nav-active');
+              navLinks[0].classList.add('nav-active'); // Always highlight Home on the homepage
             }
           }
         });
-      });
-      // Handle Hero separately
-      ScrollTrigger.create({
-        trigger: '#hero',
-        start: 'top center',
-        end: 'bottom center',
-        onToggle: (self) => {
-          if (self.isActive) {
-            navLinks.forEach(link => link.classList.remove('nav-active'));
-            navLinks[0].classList.add('nav-active');
-          }
-        }
       });
 
       // Magnetic Buttons
@@ -247,13 +215,14 @@ export function Content() {
             const rect = btn.getBoundingClientRect();
             const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
             const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
-            gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out', scale: 1.02 });
+            gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out' });
           });
           btn.addEventListener('mouseleave', () => {
-            gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)', scale: 1 });
+            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
           });
         });
       }
+
     }, containerRef);
     
     return () => ctx.revert();
@@ -263,45 +232,27 @@ export function Content() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
-    
-    // Parallax values
     const xPos = (clientX / innerWidth - 0.5) * 2;
     const yPos = (clientY / innerHeight - 0.5) * 2;
     
-    // Background (2px)
-    gsap.to(bgRef.current, { x: -xPos * 4, y: -yPos * 4, duration: 1, ease: 'power2.out' });
-    
-    // 3D Chip (10px)
-    gsap.to(chipRef.current, { 
-      x: -xPos * 20, 
-      y: -yPos * 20, 
-      rotationY: xPos * 4, 
-      rotationX: -yPos * 4,
-      duration: 1.5, 
-      ease: 'power2.out' 
+    gsap.to('.hero-content-area', {
+      rotationY: xPos * 2,
+      rotationX: -yPos * 2,
+      duration: 1,
+      ease: 'power2.out'
     });
-    
-    // Foreground Text (14px)
-    if (heroTextRef.current) {
-      gsap.to(heroTextRef.current, {
-        x: -xPos * 28,
-        y: -yPos * 28,
-        rotationY: xPos * 8,
-        rotationX: -yPos * 8,
-        duration: 1,
-        ease: 'power2.out'
-      });
-    }
   };
 
   const handleHeroMouseLeave = () => {
-    gsap.to([bgRef.current, chipRef.current, heroTextRef.current], {
+    gsap.to('.hero-content-area', {
       x: 0, y: 0, rotationX: 0, rotationY: 0, duration: 1.5, ease: 'power3.out'
     });
   };
 
+  const [hoveredEco, setHoveredEco] = useState<string | null>(null);
+
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} style={{ backgroundColor: '#040D14', color: '#F8FAFC' }}>
       
       {/* GLOBAL CONTINUOUS SIGNAL */}
       <svg style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 1 }}>
@@ -317,22 +268,21 @@ export function Content() {
         />
       </svg>
 
+      {/* NAVIGATION */}
       <nav className="navbar" id="navbar">
-        <div className="logo title-font" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div className="logo title-font" style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img src="/logo_2.png" alt="MicroMinds Logo" style={{ height: '64px' }} />
           <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', lineHeight: 1.2 }}>DJS MICROMINDS<br/><span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>VLSI CLUB</span></div>
         </div>
         <div className="nav-links">
-          <a href="#hero" className="nav-link nav-active">Home</a>
-          <a href="#vision" className="nav-link">Vision</a>
-          <a href="#projects" className="nav-link">Projects</a>
-          <a href="#events" className="nav-link">Events</a>
-          <a href="#team" className="nav-link">Team</a>
-          <a href="#faculty" className="nav-link">Faculty</a>
-          <a href="#connect" className="nav-link">Connect</a>
-        </div>
-        <div>
-          <a href="#connect" className="btn magnetic-btn">JOIN THE CLUB &rarr;</a>
+          <Link to="/" className="nav-link nav-active" style={{ position: 'relative' }}>
+            Home
+            <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '100%', height: '2px', background: 'var(--color-teal)' }}></span>
+          </Link>
+          <Link to="/vision" className="nav-link">Vision</Link>
+          <Link to="/projects" className="nav-link">Projects</Link>
+          <Link to="/events" className="nav-link">Events</Link>
+          <Link to="/team" className="nav-link">Team</Link>
         </div>
       </nav>
 
@@ -344,50 +294,37 @@ export function Content() {
         onMouseLeave={handleHeroMouseLeave}
         style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', alignItems: 'center', paddingTop: '6rem', paddingBottom: '8rem', backgroundColor: '#040D14' }}
       >
-        
-        {/* Background circuit lines (abstract SVG) */}
         <div ref={bgRef} style={{ position: 'absolute', top: '-5%', left: '-5%', width: '110%', height: '110%', pointerEvents: 'none', zIndex: 0, opacity: 0.5 }}>
            <svg width="100%" height="100%">
-              {/* Path matching reference */}
               <path id="bg-path-1" d="M 0 200 L 200 200 L 400 400 L 800 400" fill="none" stroke="rgba(77, 184, 166, 0.3)" strokeWidth="2" />
-              {/* Glowing signal particle traversing the path */}
               <path d="M 0 200 L 200 200 L 400 400 L 800 400" fill="none" stroke="var(--color-teal)" strokeWidth="4" strokeDasharray="50 1000" style={{ animation: 'electric-zap 8s infinite linear', filter: 'drop-shadow(0 0 10px var(--color-teal))' }} />
-
               <path id="bg-path-2" d="M 1200 0 L 1200 200 L 900 500 L 900 1000" fill="none" stroke="rgba(77, 184, 166, 0.3)" strokeWidth="2" />
               <path d="M 1200 0 L 1200 200 L 900 500 L 900 1000" fill="none" stroke="var(--color-teal)" strokeWidth="4" strokeDasharray="30 1500" style={{ animation: 'electric-zap 12s infinite linear 2s', filter: 'drop-shadow(0 0 10px var(--color-teal))' }} />
               
-              {/* Interactive Nodes */}
               <circle cx="200" cy="200" r="3" fill="var(--color-teal)" className="circuit-node" />
               <circle cx="400" cy="400" r="3" fill="var(--color-teal)" className="circuit-node" />
               <circle cx="900" cy="500" r="4" fill="var(--color-teal)" className="circuit-node" />
            </svg>
         </div>
 
-        {/* Content Area */}
-        <div className="hero-content-area w-full" style={{ position: 'relative', zIndex: 1, paddingLeft: '4rem', gridTemplateColumns: '4fr 8fr' }}>
+        <div className="hero-content-area w-full" style={{ position: 'relative', zIndex: 1, paddingLeft: '4rem', gridTemplateColumns: '4fr 8fr', display: 'grid' }}>
           
-          {/* Left Typography */}
           <div className="flex flex-col justify-center relative">
-            
             <h1 className="text-hero" ref={heroTextRef} style={{ display: 'inline-block', perspective: 1000, lineHeight: 0.85, margin: 0, marginTop: '4rem' }}>
               <span className="text-mask-wrapper"><span className="text-mask-content mask-ideas">IDEAS</span></span>
               <span className="text-mask-wrapper"><span className="text-mask-content mask-into">INTO</span></span>
               <span className="text-mask-wrapper"><span className="text-mask-content text-teal mask-silicon">SILICON.</span></span>
             </h1>
             
-            {/* Starts empty, GSAP TextPlugin types it out */}
             <p className="hero-desc hero-desc-typewriter" style={{ marginTop: '2rem', minHeight: '4.5rem' }}></p>
             
             <div className="flex mt-4" style={{ gap: '1rem' }}>
-              <div className="magnetic-wrap"><a href="#projects" className="btn btn-primary hero-text-anim magnetic-btn">EXPLORE PROJECTS &rarr;</a></div>
-              <div className="magnetic-wrap"><a href="#team" className="btn hero-text-anim magnetic-btn">MEET THE TEAM</a></div>
+              <div className="magnetic-wrap"><Link to="/vision" className="btn btn-primary hero-text-anim magnetic-btn">OUR VISION &rarr;</Link></div>
+              <div className="magnetic-wrap"><Link to="/team" className="btn hero-text-anim magnetic-btn">MEET THE TEAM</Link></div>
             </div>
-
           </div>
           
-          {/* Right Graphic Area (The Exploded Chip) */}
           <div className="relative flex items-center justify-center w-full" style={{ perspective: '1000px' }}>
-            
             <div style={{ position: 'relative', width: '100%', maxWidth: '900px', transform: 'translateY(-2rem)' }}>
               <img 
                 ref={chipRef}
@@ -412,7 +349,6 @@ export function Content() {
               }}></div>
             </div>
 
-            {/* Electrical Bursts */}
             {bursts.map(burst => (
               <svg key={burst.id} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 20 }}>
                 {Array.from({ length: 12 }).map((_, i) => {
@@ -420,7 +356,6 @@ export function Content() {
                   const length = 200 + Math.random() * 400;
                   const x2 = burst.x + Math.cos(angle) * length;
                   const y2 = burst.y + Math.sin(angle) * length;
-                  // create jagged lightning path
                   let path = `M ${burst.x} ${burst.y}`;
                   let curX = burst.x;
                   let curY = burst.y;
@@ -450,222 +385,168 @@ export function Content() {
         </div>
       </section>
 
-      {/* 2. INTRODUCTION */}
-      <section id="intro" className="bg-light relative">
-        <div className="grid">
-          <div className="col-span-5">
-            <span className="text-label" style={{ color: 'var(--color-navy)' }}>01 &mdash; MICROMINDS</span>
-            <h2 className="text-heading" style={{ color: 'var(--color-navy)' }}>
-              MORE THAN<br/>A CLUB.
-            </h2>
-            <p className="text-body text-muted mt-8">
-              DJS MicroMinds is a student-driven VLSI community focused on learning, designing, researching and building with silicon. We bridge the gap between theoretical electronics and practical chip design.
-            </p>
-          </div>
-          
-          <div className="col-span-6 col-start-7 flex flex-col justify-center">
-            <div className="grid" style={{ padding: 0, gridTemplateColumns: 'repeat(2, 1fr)', gap: '4rem' }}>
-              <div>
-                <span className="text-label" style={{ color: 'var(--color-navy)' }}>01</span>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--color-navy)' }}>VLSI DESIGN</h3>
-              </div>
-              <div>
-                <span className="text-label" style={{ color: 'var(--color-navy)' }}>02</span>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--color-navy)' }}>RESEARCH<br/>&amp; LEARNING</h3>
-              </div>
-              <div>
-                <span className="text-label" style={{ color: 'var(--color-navy)' }}>03</span>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--color-navy)' }}>PROJECTS<br/>&amp; BUILDING</h3>
-              </div>
-              <div>
-                <span className="text-label" style={{ color: 'var(--color-navy)' }}>04</span>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--color-navy)' }}>COMMUNITY<br/>&amp; COLLABORATION</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. VISION */}
-      <section id="vision" className="bg-dark">
-        <div className="grid">
-          <div className="col-span-6">
-            <span className="text-label">02 &mdash; OUR VISION</span>
-            <h2 className="text-heading">
-              BUILDING THE NEXT<br/>GENERATION OF<br/>SEMICONDUCTOR<br/>INNOVATORS.
-            </h2>
-            <p className="text-body text-muted mt-8">
-              We aim to foster semiconductor awareness and provide practical, project-based experience. By collaborating and building a strong VLSI community, we expose students to industry-relevant technology that transforms them from students into silicon builders.
-            </p>
-          </div>
-          <div className="col-span-6 flex items-center justify-center relative">
-            <div className="parallax-graphic" style={{ border: '1px solid rgba(77, 184, 166, 0.2)', padding: '4rem', width: '100%', height: '500px', position: 'relative' }}>
-              <div className="micro-annotation" style={{ position: 'absolute', top: '-0.75rem', left: '2rem', background: 'var(--color-navy)' }}>LAYOUT_VIEW</div>
-              
-              {/* Abstract layout geometry */}
-              <div style={{ width: '100%', height: '100%', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
-                <div style={{ background: '#1E2633', gridColumn: 'span 2', gridRow: 'span 2' }}></div>
-                <div style={{ background: '#1E2633' }}></div>
-                <div style={{ background: '#1E2633' }}></div>
-                <div style={{ background: '#1E2633', gridColumn: 'span 2' }}></div>
-                <div style={{ background: '#1E2633', gridColumn: 'span 3', gridRow: 'span 2' }}></div>
-                <div style={{ background: '#4DB8A6', opacity: 0.2 }}></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. PROJECTS */}
-      <section id="projects" className="bg-light">
-        <div className="grid">
-          <div className="col-span-12">
-            <span className="text-label">03 &mdash; ENGINEERING WORK</span>
-            <h2 className="text-heading" style={{ color: 'var(--color-navy)' }}>PROJECTS</h2>
-          </div>
-          
-          <div className="col-span-12 mt-16" style={{ borderTop: '1px solid rgba(15,23,42,0.1)', paddingTop: '4rem' }}>
-            <div className="grid" style={{ padding: 0 }}>
-              <div className="col-span-4 flex flex-col justify-between">
-                <div>
-                  <div className="text-label" style={{ color: 'var(--color-navy)' }}>PROJECT 01</div>
-                  <h3 style={{ fontSize: '2.5rem', fontWeight: 700, lineHeight: 1.1, color: 'var(--color-navy)', marginBottom: '1rem' }}>RISC-V CORE IMPL</h3>
-                  <p className="text-body text-muted" style={{ fontSize: '1rem' }}>A custom-designed 32-bit RISC-V processor core optimized for low power consumption.</p>
-                  
-                  <div className="mt-8" style={{ borderTop: '1px solid rgba(15,23,42,0.1)', paddingTop: '1rem' }}>
-                    <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-navy)', marginBottom: '0.5rem' }}>OBJECTIVE</p>
-                    <p className="text-muted" style={{ fontSize: '0.9rem' }}>Pipeline optimization and architecture.</p>
-                  </div>
-                </div>
-                <div className="mt-8">
-                  <div className="micro-annotation" style={{ marginBottom: '0.5rem' }}>TECH: VERILOG &middot; ASIC</div>
-                  <br/>
-                  <div className="micro-annotation">STATUS: IN DEVELOPMENT</div>
-                </div>
-              </div>
-              <div className="col-span-8 bg-dark relative flex items-center justify-center" style={{ height: '600px' }}>
-                <span className="micro-annotation" style={{ position: 'absolute', top: '1rem', right: '1rem' }}>[SIGNAL ACTIVE]</span>
-                <div style={{ width: '60%' }}><SignalWaveform active={true} /></div>
-                <p className="micro-annotation" style={{ position: 'absolute', bottom: '1rem', left: '1rem', border: 'none' }}>SIMULATION_WAVEFORM_01</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 5. EVENTS */}
-      <section id="events" className="bg-dark">
-        <div className="grid">
-          <div className="col-span-12">
-            <span className="text-label">04 &mdash; SIGNALS IN THE COMMUNITY</span>
-            <h2 className="text-heading">EVENTS</h2>
-            <p className="text-body text-muted">LEARN. CONNECT. BUILD.</p>
-          </div>
-          
-          <div className="col-span-8 mt-16 relative">
-            {/* Featured Event */}
-            <div style={{ background: '#1E2633', width: '100%', aspectRatio: '16/9' }}>
-               {/* Image Placeholder */}
-            </div>
-            <div style={{ position: 'absolute', bottom: '-2rem', right: '-4rem', background: 'var(--color-navy)', padding: '3rem', border: '1px solid rgba(255,255,255,0.1)', maxWidth: '400px' }}>
-              <span className="micro-annotation" style={{ marginBottom: '1rem' }}>WORKSHOP_01</span>
-              <h3 style={{ fontSize: '2rem', fontWeight: 600 }}>VLSI DESIGN WORKSHOP</h3>
-              <p className="text-teal mt-2" style={{ color: 'var(--color-teal)' }}>September 2026</p>
-              <p className="text-muted mt-4">An introductory workshop to SystemVerilog and RTL simulation.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. TEAM */}
-      <section id="team" className="bg-light">
-        <div className="grid">
-          <div className="col-span-5">
-            <span className="text-label">05 &mdash; HUMAN RESOURCES</span>
-            <h2 className="text-heading" style={{ color: 'var(--color-navy)' }}>MEET THE<br/>CORE TEAM.</h2>
-            <div className="micro-annotation mt-8">NODE_COUNT: 3</div>
-          </div>
-          
-          <div className="col-span-12 mt-8">
-            <div style={{ width: '100%', height: '70vh', background: 'var(--color-neutral)', position: 'relative' }}>
-              {/* Massive Team Photo Placeholder */}
-              <div style={{ position: 'absolute', top: '2rem', left: '2rem', borderLeft: '1px solid var(--color-teal)', borderTop: '1px solid var(--color-teal)', width: '20px', height: '20px' }}></div>
-              <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', borderRight: '1px solid var(--color-teal)', borderBottom: '1px solid var(--color-teal)', width: '20px', height: '20px' }}></div>
-              <span className="micro-annotation" style={{ position: 'absolute', bottom: '2rem', left: '2rem', background: 'var(--color-light)', border: 'none' }}>X: 42.1 Y: 108.4</span>
-            </div>
-            
-            <div className="grid mt-8" style={{ padding: 0, gridTemplateColumns: 'repeat(3, 1fr)' }}>
-              <div style={{ borderTop: '1px solid rgba(15,23,42,0.1)', paddingTop: '1.5rem' }}>
-                <h4 style={{ fontWeight: 600, fontSize: '1.5rem', color: 'var(--color-navy)' }}>Arnav Bhandari</h4>
-                <p className="text-muted mt-1">Technical Head</p>
-              </div>
-              <div style={{ borderTop: '1px solid rgba(15,23,42,0.1)', paddingTop: '1.5rem' }}>
-                <h4 style={{ fontWeight: 600, fontSize: '1.5rem', color: 'var(--color-navy)' }}>Jane Doe</h4>
-                <p className="text-muted mt-1">Research Lead</p>
-              </div>
-              <div style={{ borderTop: '1px solid rgba(15,23,42,0.1)', paddingTop: '1.5rem' }}>
-                <h4 style={{ fontWeight: 600, fontSize: '1.5rem', color: 'var(--color-navy)' }}>John Smith</h4>
-                <p className="text-muted mt-1">Operations Manager</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. FACULTY IN-CHARGE */}
-      <section id="faculty" className="bg-neutral" style={{ backgroundColor: '#E2E8F0', padding: '8rem 0' }}>
-        <div className="grid items-center">
-          <div className="col-span-5">
-            <div style={{ background: '#CBD5E1', width: '100%', aspectRatio: '3/4', position: 'relative' }}>
-              <div style={{ position: 'absolute', bottom: '-1rem', right: '-1rem', borderBottom: '1px solid var(--color-navy)', borderRight: '1px solid var(--color-navy)', width: '40px', height: '40px' }}></div>
-            </div>
-          </div>
-          <div className="col-span-6 col-start-7">
-            <span className="text-label">06 &mdash; GUIDED BY EXPERIENCE</span>
-            <h2 className="text-heading" style={{ color: 'var(--color-navy)', marginBottom: '1rem' }}>Dr. Alan Turing</h2>
-            <p className="text-body" style={{ color: 'var(--color-teal)', fontWeight: 600, marginBottom: '2rem' }}>Faculty In-Charge &middot; EXTC Department</p>
-            <p className="text-body text-muted">
-              Bringing decades of academic and research experience to guide the next generation of semiconductor innovators.
-            </p>
-            <div className="mt-8">
-              <span className="micro-annotation">STATUS: ACTIVE</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. CONNECT - TAPEOUT */}
-      <section id="connect" className="bg-dark" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }} ref={connectRef}>
-        <div className="grid relative text-center items-center justify-center" style={{ display: 'flex', flexDirection: 'column' }}>
-          
-          {/* Abstract SVG routing that draws itself */}
-          <svg viewBox="0 0 400 200" style={{ width: '400px', marginBottom: '2rem' }}>
-            <path className="tapeout-path anim-path" d="M0,100 L150,100 L150,50 L250,50 L250,100 L400,100" fill="none" stroke="#4DB8A6" strokeWidth="2" />
-            <circle cx="200" cy="100" r="4" fill="#4DB8A6" />
-          </svg>
-          
-          <h2 className="text-hero tapeout-text" style={{ fontSize: 'clamp(3rem, 6vw, 6rem)' }}>READY FOR<br/>TAPEOUT?</h2>
-          
-          <div className="tapeout-text mt-8">
-            <span className="micro-annotation" style={{ background: 'rgba(77,184,166,0.1)', border: '1px solid var(--color-teal)' }}>CONNECTION COMPLETE.</span>
-          </div>
-
-          <p className="tapeout-text text-body mt-16 text-muted">BUILD THE FUTURE WITH US.</p>
-
-          <div className="tapeout-text flex mt-8" style={{ gap: '2rem' }}>
-            <a href="#" className="btn" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>
-              <Instagram /> INSTAGRAM &rarr;
-            </a>
-            <a href="#" className="btn" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>
-              <Linkedin /> LINKEDIN &rarr;
-            </a>
-          </div>
-          
-          <p className="tapeout-text mt-16" style={{ fontSize: '0.85rem', color: 'var(--color-muted)', letterSpacing: '0.1em' }}>
-            &copy; 2026 DJS MICROMINDS VLSI CLUB
+      {/* 2. WHAT WE DO */}
+      <section id="what-we-do" className="grid" style={{ paddingTop: '8rem', paddingBottom: '4rem' }}>
+        <div className="col-span-12">
+          <h2 style={{ fontSize: 'clamp(3rem, 6vw, 4rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', marginBottom: '4rem' }}>
+            WE LEARN.<br/>
+            WE BUILD.<br/>
+            WE GROW.
+          </h2>
+          <p className="text-body text-muted" style={{ maxWidth: '600px', marginBottom: '8rem' }}>
+            MicroMinds is a student-driven VLSI community focused on learning, experimentation, projects, competitions, research, and collaboration.
           </p>
+
+          <div className="editorial-row">
+            <div className="editorial-number">01</div>
+            <div className="editorial-title">LEARN</div>
+            <div className="editorial-desc">Workshops, seminars, hands-on sessions and strong VLSI fundamentals.</div>
+            <div className="editorial-line"></div>
+            <div className="editorial-signal"></div>
+          </div>
+          
+          <div className="editorial-row">
+            <div className="editorial-number">02</div>
+            <div className="editorial-title">BUILD</div>
+            <div className="editorial-desc">Turning concepts into practical hardware projects and experimentation.</div>
+            <div className="editorial-line"></div>
+            <div className="editorial-signal"></div>
+          </div>
+
+          <div className="editorial-row">
+            <div className="editorial-number">03</div>
+            <div className="editorial-title">GROW</div>
+            <div className="editorial-desc">Competitions, research, collaboration, industry exposure and community.</div>
+            <div className="editorial-line"></div>
+            <div className="editorial-signal"></div>
+          </div>
         </div>
       </section>
+
+      {/* 3. STATS */}
+      <section id="stats" style={{ padding: '8rem 2rem', background: '#0A121D', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="grid" style={{ padding: 0 }}>
+          <div className="col-span-3">
+            <div className="stats-number">2026</div>
+            <div className="stats-label">TEAM YEAR</div>
+          </div>
+          <div className="col-span-3">
+            <div className="stats-number">0<span className="stats-val" data-target="2">0</span>+</div>
+            <div className="stats-label">PROJECTS</div>
+          </div>
+          <div className="col-span-3">
+            <div className="stats-number">0<span className="stats-val" data-target="1">0</span></div>
+            <div className="stats-label">UPCOMING WORKSHOP</div>
+          </div>
+          <div className="col-span-3">
+            <div className="stats-number" style={{ fontSize: '10rem', lineHeight: 0.7 }}>&infin;</div>
+            <div className="stats-label">IDEAS</div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. EVENT PROMO */}
+      <section id="event-promo" style={{ padding: '12rem 2rem', position: 'relative', overflow: 'hidden' }}>
+        <svg style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', opacity: 0.1, pointerEvents: 'none' }}>
+          <path className="event-circuit" d="M 0 0 L 200 200 L 200 600 L 400 800" fill="none" stroke="var(--color-teal)" strokeWidth="2" strokeDasharray="1000" strokeDashoffset="1000" />
+        </svg>
+        <div className="grid" style={{ alignItems: 'center', padding: 0 }}>
+          <div className="col-span-5 relative">
+            <div className="event-giant-date">27</div>
+          </div>
+          <div className="col-span-7">
+            <span className="text-label" style={{ marginBottom: '2rem', display: 'block' }}>WHAT'S HAPPENING</span>
+            <div className="event-title event-title-1">SEPTEMBER 2026</div>
+            <div className="event-title event-title-2" style={{ color: 'var(--color-teal)' }}>FPGA WORKSHOP</div>
+            
+            <p className="event-desc text-muted mt-8" style={{ fontSize: '1.25rem', maxWidth: '500px' }}>
+              <strong>DJS MicroMinds VLSI Club</strong><br/><br/>
+              A hands-on FPGA workshop introducing participants to digital design and FPGA development.
+            </p>
+            
+            <div className="event-btn mt-8">
+              <Link to="/events" className="btn btn-primary">VIEW EVENT &rarr;</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. TEAM PHOTO */}
+      <section id="team-promo" style={{ padding: '8rem 2rem' }}>
+        <div className="grid" style={{ padding: 0 }}>
+          <div className="col-span-12 team-heading mb-8 flex justify-between items-end">
+            <h2 className="text-heading" style={{ margin: 0 }}>THE PEOPLE<br/>BEHIND MICROMINDS.</h2>
+            <Link to="/team" className="btn" style={{ borderColor: 'rgba(255,255,255,0.2)' }}>MEET THE TEAM &rarr;</Link>
+          </div>
+          <div className="col-span-12 team-photo-container">
+            <img src="/team/Team_photo.jpeg" alt="DJS MicroMinds Team" className="team-photo" />
+            <div className="team-scanline"></div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* INSTITUTIONAL FOOTER */}
+      <section id="institutional-footer" style={{ padding: '6rem 2rem 1.5rem 2rem', background: '#02060C', position: 'relative', overflow: 'hidden' }}>
+        
+        {/* Subtle Background Circuit */}
+        <svg style={{ position: 'absolute', top: 0, right: 0, width: '400px', height: '100%', pointerEvents: 'none', opacity: 0.05, zIndex: 0 }}>
+          <path d="M 100 0 L 100 150 L 300 300" fill="none" stroke="var(--color-teal)" strokeWidth="1" />
+          <circle cx="300" cy="300" r="2" fill="var(--color-teal)" className="circuit-pulse" />
+        </svg>
+
+        <div className="relative z-10" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          
+          <div className="institutional-footer-grid">
+            
+            {/* Column 1 - ABOUT */}
+            <div className="footer-col-about">
+              <div className="title-font flex items-center" style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '0.1em', marginBottom: '0.25rem' }}>
+                DJS MICROMINDS <div className="footer-pulse"></div>
+              </div>
+              <div className="text-muted font-semibold" style={{ letterSpacing: '0.1em', marginBottom: '1.5rem', fontSize: '0.9rem' }}>VLSI CLUB</div>
+              
+              <p className="text-muted" style={{ maxWidth: '280px', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                A student-driven VLSI community building ideas, exploring technology and creating together.
+              </p>
+            </div>
+
+            {/* Column 2 - USEFUL LINKS */}
+            <div className="footer-col-links">
+              <h4 className="footer-inst-title text-teal">USEFUL LINKS</h4>
+              <nav className="flex flex-col gap-3">
+                <Link to="/" className="inst-link">Home</Link>
+                <Link to="/vision" className="inst-link">Vision</Link>
+                <Link to="/projects" className="inst-link">Projects</Link>
+                <Link to="/events" className="inst-link">Events</Link>
+                <Link to="/team" className="inst-link">Team</Link>
+              </nav>
+            </div>
+
+            {/* Column 3 - FOLLOW US */}
+            <div className="footer-col-social">
+              <h4 className="footer-inst-title text-teal">FOLLOW US</h4>
+              <nav className="flex flex-col gap-4">
+                <a href="https://www.instagram.com/djs.microminds?stkn=dXlzbGxqNWZmZ20y" target="_blank" rel="noopener noreferrer" className="inst-social-link">
+                  <Instagram /> Instagram
+                </a>
+                <a href="https://www.linkedin.com/company/djs-microminds/" target="_blank" rel="noopener noreferrer" className="inst-social-link">
+                  <Linkedin /> LinkedIn
+                </a>
+              </nav>
+            </div>
+
+          </div>
+
+          <div className="footer-copyright-bar">
+            &copy; 2026 DJS MicroMinds VLSI Club
+          </div>
+          
+        </div>
+      </section>
+
+
+
     </div>
   );
 }
