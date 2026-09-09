@@ -159,21 +159,6 @@ export function Vision() {
         />
       </svg>
 
-      {/* Navbar transition wrapper */}
-      <nav className="vision-navbar" style={{ position: 'fixed', top: 0, left: 0, right: 0, padding: '1.5rem 4rem', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
-        <div style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img src="/logo_2.png" alt="MicroMinds" style={{ height: '48px', filter: 'invert(1)' }} />
-          <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', color: '#071A4A' }}>
-            DJS MICROMINDS<br/><span style={{ color: '#718096', fontWeight: 400 }}>VISION</span>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          <Link to="/" className="nav-link" style={{ color: '#071A4A', fontWeight: 500, fontSize: '0.85rem' }}>Home</Link>
-          <div className="nav-link nav-active" style={{ color: '#24B8A8', fontWeight: 600, fontSize: '0.85rem', position: 'relative' }}>Vision</div>
-          <Link to="/team" className="nav-link" style={{ color: '#071A4A', fontWeight: 500, fontSize: '0.85rem' }}>Team</Link>
-        </div>
-      </nav>
-
       {/* 4. VISION HERO */}
       <section id="vision-hero" style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '4rem', paddingLeft: '4rem', paddingRight: '4rem', position: 'relative' }}>
         

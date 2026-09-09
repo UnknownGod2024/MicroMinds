@@ -189,23 +189,7 @@ export function Content() {
         }
       });
 
-      // Navbar Active Indicator (GSAP ScrollTrigger for each section)
-      const navLinks = document.querySelectorAll('.nav-link');
-      const sections = gsap.utils.toArray('section');
-      sections.forEach((sec: any) => {
-        ScrollTrigger.create({
-          trigger: sec,
-          start: 'top center',
-          end: 'bottom center',
-          onToggle: (self) => {
-            // Very simplistic active state
-            if (self.isActive && navLinks[0]) { 
-              navLinks.forEach(link => link.classList.remove('nav-active'));
-              navLinks[0].classList.add('nav-active'); // Always highlight Home on the homepage
-            }
-          }
-        });
-      });
+
 
       // Magnetic Buttons
       if (!prefersReducedMotion) {
@@ -269,22 +253,7 @@ export function Content() {
       </svg>
 
       {/* NAVIGATION */}
-      <nav className="navbar" id="navbar">
-        <div className="logo title-font" style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img src="/logo_2.png" alt="MicroMinds Logo" style={{ height: '64px' }} />
-          <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', lineHeight: 1.2 }}>DJS MICROMINDS<br/><span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>VLSI CLUB</span></div>
-        </div>
-        <div className="nav-links">
-          <Link to="/" className="nav-link nav-active" style={{ position: 'relative' }}>
-            Home
-            <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '100%', height: '2px', background: 'var(--color-teal)' }}></span>
-          </Link>
-          <Link to="/vision" className="nav-link">Vision</Link>
-          <Link to="/projects" className="nav-link">Projects</Link>
-          <Link to="/events" className="nav-link">Events</Link>
-          <Link to="/team" className="nav-link">Team</Link>
-        </div>
-      </nav>
+
 
       {/* 1. HERO SECTION */}
       <section 

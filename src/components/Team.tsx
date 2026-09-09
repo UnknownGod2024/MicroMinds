@@ -329,19 +329,7 @@ export function Team() {
     <div ref={containerRef} style={{ backgroundColor: '#FFFFFF', color: '#071A4A', minHeight: '100vh', overflowX: 'hidden' }}>
       
       {/* Navbar */}
-      <nav className="vision-navbar team-navbar" style={{ position: 'fixed', top: 0, left: 0, right: 0, padding: '1.5rem 4rem', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100, background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(8px)', borderBottom: '1px solid rgba(7, 26, 74, 0.05)' }}>
-        <div style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img src="/logo_2.png" alt="MicroMinds" style={{ height: '48px', filter: 'invert(1)' }} />
-          <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', color: '#071A4A' }}>
-            DJS MICROMINDS<br/><span style={{ color: '#1649C7', fontWeight: 400 }}>TEAM</span>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          <Link to="/" className="nav-link" style={{ color: '#071A4A', fontWeight: 500, fontSize: '0.85rem' }}>Home</Link>
-          <Link to="/vision" className="nav-link" style={{ color: '#071A4A', fontWeight: 500, fontSize: '0.85rem' }}>Vision</Link>
-          <div className="nav-link nav-active" style={{ color: '#24B8A8', fontWeight: 600, fontSize: '0.85rem', position: 'relative' }}>Team</div>
-        </div>
-      </nav>
+
 
       {/* 3. TEAM HERO */}
       <section onMouseMove={handleHeroMouseMove} onMouseLeave={handleHeroMouseLeave} style={{ minHeight: '100vh', position: 'relative', paddingTop: '10rem', overflow: 'hidden' }}>

@@ -14,9 +14,19 @@ export const Projects = () => {
 
     let ctx = gsap.context(() => {
       // 1. Hero Animation
-      gsap.fromTo('.proj-hero-text',
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }
+      gsap.fromTo('.proj-hero-word',
+        { opacity: 0, y: 100, rotateZ: 5 },
+        { opacity: 1, y: 0, rotateZ: 0, duration: 1.2, stagger: 0.15, ease: 'power4.out' }
+      );
+      gsap.fromTo('.proj-hero-sub',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, delay: 0.6, ease: 'power2.out' }
+      );
+
+      // 1.5. Intro Description Animation
+      gsap.fromTo('.proj-intro-element',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.proj-intro-section', start: 'top 80%' } }
       );
 
       // 2. SVG Signal Animation
@@ -49,6 +59,12 @@ export const Projects = () => {
         { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', scrollTrigger: { trigger: '.flow-section', start: 'top 85%' } }
       );
 
+      // 5. Footer Animation
+      gsap.fromTo('.proj-footer-text',
+        { opacity: 0, scale: 0.95, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 1, stagger: 0.2, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.proj-footer-section', start: 'top 85%' } }
+      );
+
     }, containerRef);
     
     return () => ctx.revert();
@@ -62,49 +78,34 @@ export const Projects = () => {
     <div ref={containerRef} style={{ backgroundColor: '#040D14', color: '#F8FAFC', minHeight: '100vh', overflowX: 'hidden' }}>
       
       {/* NAVIGATION */}
-      <nav className="navbar" id="navbar">
-        <div className="logo title-font" style={{ position: 'absolute', left: '4rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img src="/logo_2.png" alt="MicroMinds Logo" style={{ height: '64px' }} />
-          <div style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', lineHeight: 1.2 }}>DJS MICROMINDS<br/><span style={{ color: 'var(--color-muted)', fontWeight: 400 }}>VLSI CLUB</span></div>
-        </div>
-        <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/vision" className="nav-link">Vision</Link>
-          <Link to="/projects" className="nav-link nav-active" style={{ position: 'relative' }}>
-            Projects
-            <span style={{ position: 'absolute', bottom: '-5px', left: 0, width: '100%', height: '2px', background: 'var(--color-teal)' }}></span>
-          </Link>
-          <Link to="/events" className="nav-link">Events</Link>
-          <Link to="/team" className="nav-link">Team</Link>
-        </div>
-      </nav>
+
 
       {/* 1. PAGE HERO */}
       <section style={{ padding: '12rem 4rem 8rem 4rem', position: 'relative', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         {/* Subtle background lines */}
-        <svg style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '100%', opacity: 0.1, pointerEvents: 'none' }}>
-           <path d="M 0 100 L 400 100 L 600 300 L 1000 300" fill="none" stroke="var(--color-teal)" strokeWidth="1" strokeDasharray="5 5" />
-           <path d="M 1200 0 L 1200 400 L 800 800" fill="none" stroke="var(--color-teal)" strokeWidth="1" strokeDasharray="5 5" />
+        <svg style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '100%', opacity: 0.2, pointerEvents: 'none' }}>
+           <path className="bg-circuit-line" d="M -200 100 L 400 100 L 600 300 L 1400 300" fill="none" stroke="var(--color-teal)" strokeWidth="1" strokeDasharray="200" strokeDashoffset="200" />
+           <path className="bg-circuit-line-2" d="M 1200 -200 L 1200 400 L 800 800 L -200 800" fill="none" stroke="var(--color-teal)" strokeWidth="1" strokeDasharray="200" strokeDashoffset="200" />
         </svg>
 
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          <h1 className="proj-hero-text" style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', lineHeight: 0.9, margin: 0, marginBottom: '2rem' }}>
-            WHAT WE'RE<br/>
-            BUILDING.
+          <h1 style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', lineHeight: 0.9, margin: 0, marginBottom: '2rem', perspective: '1000px' }}>
+            <div style={{ overflow: 'hidden' }}><div className="proj-hero-word" style={{ display: 'inline-block' }}>WHAT</div> <div className="proj-hero-word" style={{ display: 'inline-block' }}>WE'RE</div></div>
+            <div style={{ overflow: 'hidden' }}><div className="proj-hero-word" style={{ display: 'inline-block', color: 'var(--color-teal)' }}>BUILDING.</div></div>
           </h1>
-          <h3 className="proj-hero-text" style={{ fontSize: '1.5rem', fontWeight: 500, color: 'var(--color-teal)', letterSpacing: '0.05em', margin: 0 }}>
+          <h3 className="proj-hero-sub" style={{ fontSize: '1.5rem', fontWeight: 500, color: '#94A3B8', letterSpacing: '0.05em', margin: 0 }}>
             Ideas become experiments. Experiments become projects.
           </h3>
         </div>
       </section>
 
       {/* 2. NEUROADAPT-RISC */}
-      <section style={{ padding: '8rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, fontFamily: 'var(--font-creative)', margin: 0, marginBottom: '1rem' }}>NEUROADAPT-RISC</h2>
-        <h4 style={{ fontSize: '1.25rem', color: '#94A3B8', fontWeight: 600, letterSpacing: '0.05em', margin: 0, marginBottom: '3rem', maxWidth: '800px' }}>
+      <section className="proj-intro-section" style={{ padding: '8rem 4rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <h2 className="proj-intro-element" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, fontFamily: 'var(--font-creative)', margin: 0, marginBottom: '1rem' }}>NEUROADAPT-RISC</h2>
+        <h4 className="proj-intro-element" style={{ fontSize: '1.25rem', color: '#94A3B8', fontWeight: 600, letterSpacing: '0.05em', margin: 0, marginBottom: '3rem', maxWidth: '800px' }}>
           Workload-Adaptive RISC-V SoC for Energy-Efficient AI & DSP Acceleration
         </h4>
-        <p style={{ fontSize: '1.5rem', lineHeight: 1.6, maxWidth: '900px', color: '#E2E8F0', fontWeight: 300, margin: 0 }}>
+        <p className="proj-intro-element" style={{ fontSize: '1.5rem', lineHeight: 1.6, maxWidth: '900px', color: '#E2E8F0', fontWeight: 300, margin: 0 }}>
           The MicroMinds Core Team is currently working on NeuroAdapt-RISC, a workload-adaptive RISC-V SoC built around a configurable AI/DSP accelerator.
           <br/><br/>
           The accelerator is designed to adapt <strong>precision, PE-array configuration, dataflow, and tiling/buffering</strong> according to workload requirements.
@@ -225,9 +226,9 @@ export const Projects = () => {
       </section>
 
       {/* 9. FINAL SECTION */}
-      <section style={{ padding: '8rem 4rem 4rem 4rem', maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-        <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', margin: 0, marginBottom: '2rem' }}>BUILDING WHAT COMES NEXT.</h2>
-        <p style={{ fontSize: '1.5rem', color: '#94A3B8', fontWeight: 400, maxWidth: '600px', margin: 0, marginBottom: '6rem' }}>
+      <section className="proj-footer-section" style={{ padding: '8rem 4rem 4rem 4rem', maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <h2 className="proj-footer-text" style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', margin: 0, marginBottom: '2rem' }}>BUILDING WHAT COMES NEXT.</h2>
+        <p className="proj-footer-text" style={{ fontSize: '1.5rem', color: '#94A3B8', fontWeight: 400, maxWidth: '600px', margin: 0, marginBottom: '6rem' }}>
           The MicroMinds Core Team is turning ideas into working hardware.
         </p>
         
@@ -241,6 +242,20 @@ export const Projects = () => {
           0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(36, 184, 168, 0.7); }
           70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(36, 184, 168, 0); }
           100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(36, 184, 168, 0); }
+        }
+        @keyframes circuit-flow {
+          0% { stroke-dashoffset: 400; }
+          100% { stroke-dashoffset: 0; }
+        }
+        @keyframes circuit-flow-reverse {
+          0% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: 400; }
+        }
+        .bg-circuit-line {
+          animation: circuit-flow 8s linear infinite;
+        }
+        .bg-circuit-line-2 {
+          animation: circuit-flow-reverse 10s linear infinite;
         }
         @media (max-width: 768px) {
           .work-row { grid-template-columns: 1fr !important; gap: 1rem; }

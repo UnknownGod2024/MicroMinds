@@ -4,10 +4,12 @@ import { Vision } from './components/Vision';
 import { Team } from './components/Team';
 import { Projects } from './components/Projects';
 import { Events } from './components/Events';
+import { Navbar } from './components/Navbar';
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Content />} />
         <Route path="/vision" element={<Vision />} />
