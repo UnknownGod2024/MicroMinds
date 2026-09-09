@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { faculty, leadership, departments } from '../data/team';
