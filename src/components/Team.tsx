@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const PortraitPlaceholder = ({ name, role, className = "", image, linkedin }: { name?: string, role?: string, className?: string, image?: string, linkedin?: string }) => (
   <div className={`team-placeholder ${className}`} style={{ width: '100%', height: '100%', background: 'linear-gradient(145deg, #071A4A, #1649C7)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
     {image && image.trim() !== "" && !image.includes("faculty.jpg") && !image.includes("chairperson.jpg") && !image.includes("vcp.jpg") && !image.includes("secretary.jpg") && !image.includes("treasurer.jpg") && !image.includes("_head.jpg") && !image.includes("_sub_") ? (
-      <img src={image} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0, zIndex: 1 }} />
+      <img src={image} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', position: 'absolute', top: 0, left: 0, zIndex: 1, backgroundColor: image.includes('Samuel') ? '#FFF' : 'transparent' }} />
     ) : (
       <>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'radial-gradient(circle at top right, rgba(36,184,168,0.2) 0%, transparent 60%)', zIndex: 1 }}></div>
@@ -18,7 +18,7 @@ const PortraitPlaceholder = ({ name, role, className = "", image, linkedin }: { 
       </>
     )}
     {linkedin && (
-      <a href={linkedin} target="_blank" rel="noopener noreferrer" style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 4, background: 'rgba(7, 26, 74, 0.7)', padding: '0.4rem', borderRadius: '50%', backdropFilter: 'blur(4px)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s ease' }} className="linkedin-link" onClick={(e) => e.stopPropagation()}>
+      <a href={linkedin} target="_blank" rel="noopener noreferrer" style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 4, background: 'rgba(7, 26, 74, 0.7)', padding: '0.4rem', borderRadius: '50%', backdropFilter: 'blur(4px)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transform: 'translateY(-10px)', transition: 'all 0.3s ease' }} className="linkedin-link" onClick={(e) => e.stopPropagation()}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
       </a>
     )}
@@ -90,8 +90,8 @@ const TeamHero3D = () => {
 };
 
 const MemberCard = ({ member, width, height }: { member: any, width: string, height: string }) => (
-  <div className="dept-member" style={{ width, display: 'flex', flexDirection: 'column' }} onClick={() => {}}>
-    <div className="member-photo-container" style={{ width: '100%', height, border: '1px solid #EAF1FF', boxShadow: '0 10px 20px rgba(7,26,74,0.05)', overflow: 'hidden', position: 'relative', marginBottom: '1rem', transition: 'border-color 0.3s ease' }}>
+  <div className="dept-member mobile-scroll-item" style={{ width, display: 'flex', flexDirection: 'column' }} onClick={() => {}}>
+    <div className="member-photo-container mobile-w-full" style={{ width: '100%', height, border: '1px solid #EAF1FF', boxShadow: '0 10px 20px rgba(7,26,74,0.05)', overflow: 'hidden', position: 'relative', marginBottom: '1rem', transition: 'border-color 0.3s ease' }}>
        <PortraitPlaceholder name={member.name} role={member.role} image={member.image} linkedin={member.linkedin} />
     </div>
     <div className="member-info" style={{ transition: 'transform 0.3s ease' }}>
@@ -114,37 +114,37 @@ const renderDepartmentLayout = (dept: any) => {
   const h = "340px";
   
   if (dept.id === '01') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <MemberCard key={i} member={m} width={w} height={h} />)}
      </div>
   }
   if (dept.id === '02') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <div key={i} style={{ transform: `translateY(${i===0 ? '0' : '40px'})` }}><MemberCard member={m} width={w} height={h} /></div>)}
      </div>
   }
   if (dept.id === '03') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <div key={i} style={{ transform: `translateY(${i%2!==0 ? '40px' : '0'})` }}><MemberCard member={m} width={w} height={h} /></div>)}
      </div>
   }
   if (dept.id === '04') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <MemberCard key={i} member={m} width={w} height={h} />)}
      </div>
   }
   if (dept.id === '05') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <div key={i} style={{ transform: `translateY(${i===1 ? '40px' : '0'})` }}><MemberCard member={m} width={w} height={h} /></div>)}
      </div>
   }
   if (dept.id === '06') {
-     return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+     return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         {allMembers.map((m, i) => <MemberCard key={i} member={m} width={w} height={h} />)}
      </div>
   }
   
-  return <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+  return <div className="mobile-scroll-x" style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap', marginTop: '2rem' }}>
      {allMembers.map((m, i) => <MemberCard key={i} member={m} width={w} height={h} />)}
   </div>
 }
@@ -342,7 +342,7 @@ export function Team() {
           {/* Left Text */}
           <div className="col-span-6 team-hero-foreground" style={{ display: 'flex', flexDirection: 'column', paddingRight: '2rem' }}>
             <div className="team-hero-line" style={{ width: '2px', height: '60px', background: '#24B8A8', marginBottom: '2rem' }}></div>
-            <h1 style={{ fontSize: 'clamp(3.5rem, 6.5vw, 7.5rem)', fontFamily: 'var(--font-creative)', fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.02em', color: '#071A4A', margin: 0 }}>
+            <h1 className="hero-title-responsive" style={{ fontSize: 'clamp(3.5rem, 6.5vw, 7.5rem)', fontFamily: 'var(--font-creative)', fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.02em', color: '#071A4A', margin: 0 }}>
               <div style={{ overflow: 'hidden', paddingBottom: '0.2rem' }}><div className="team-hero-title-1">THE PEOPLE</div></div>
               <div style={{ overflow: 'hidden', paddingBottom: '0.2rem' }}><div className="team-hero-title-2" style={{ color: '#24B8A8' }}>BEHIND</div></div>
               <div style={{ overflow: 'hidden', paddingBottom: '0.2rem' }}><div className="team-hero-title-3">MICROMINDS.</div></div>
@@ -397,9 +397,10 @@ export function Team() {
         </div>
       </section>
 
-      {/* 7. FACULTY SECTION */}
-      <section className="faculty-section" style={{ padding: '8rem 4rem', backgroundColor: '#FFFFFF' }}>
-        <div className="grid">
+      {/* 9. FACULTY SECTION */}
+      <div className="section-divider" style={{ width: '100%', height: '1px', background: '#EAF1FF' }}></div>
+      <section className="faculty-section mobile-p-none" style={{ padding: '8rem 4rem', backgroundColor: '#FFFFFF' }}>
+        <div className="grid mobile-col">
           <div className="col-span-12 fac-label" style={{ marginBottom: '4rem' }}>
           </div>
           
@@ -410,9 +411,9 @@ export function Team() {
             <div className="fac-line" style={{ position: 'absolute', top: '50%', right: '-100px', width: '100px', height: '1px', background: '#1649C7' }}></div>
           </div>
           
-          <div className="col-span-6 col-start-7" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <h3 className="fac-text" style={{ fontSize: '2.5rem', fontWeight: 800, color: '#071A4A', marginBottom: '2rem' }}>THE GUIDING FORCE.</h3>
-            <div className="fac-text" style={{ paddingLeft: '2rem', borderLeft: '2px solid #EAF1FF' }}>
+          <div className="col-span-6 col-start-7 mobile-mt-lg" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <h3 className="fac-text section-title-responsive" style={{ fontSize: '2.5rem', fontWeight: 800, color: '#071A4A', marginBottom: '2rem' }}>THE GUIDING FORCE.</h3>
+            <div className="fac-text mobile-border-none mobile-pl-none" style={{ paddingLeft: '2rem', borderLeft: '2px solid #EAF1FF' }}>
               <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1649C7' }}>{faculty.name}</div>
               <div style={{ fontSize: '1rem', fontWeight: 600, color: '#718096', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.5rem' }}>{faculty.role}</div>
             </div>
@@ -421,18 +422,18 @@ export function Team() {
       </section>
 
       {/* 8. LEADERSHIP SECTION */}
-      <section className="leadership-section" style={{ padding: '8rem 4rem', backgroundColor: '#F7F9FC' }}>
+      <section className="leadership-section mobile-p-none" style={{ padding: '8rem 4rem', backgroundColor: '#F7F9FC' }}>
         <div className="grid">
           <div className="col-span-12 fac-label" style={{ marginBottom: '4rem' }}>
-            <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#071A4A', lineHeight: 1.1, marginTop: '1rem' }}>
+            <h2 className="section-title-responsive" style={{ fontSize: '3rem', fontWeight: 800, color: '#071A4A', lineHeight: 1.1, marginTop: '1rem' }}>
               THE PEOPLE<br/>SETTING THE DIRECTION.
             </h2>
           </div>
         </div>
 
         {/* CHAIRPERSON */}
-        <div className="chairperson-section grid" style={{ marginTop: '6rem', alignItems: 'center' }}>
-          <div className="col-span-5" style={{ height: '600px', overflow: 'hidden' }}>
+        <div className="chairperson-section grid mobile-col" style={{ marginTop: '6rem', alignItems: 'center' }}>
+          <div className="col-span-5 mobile-w-full mobile-h-sm" style={{ height: '600px', overflow: 'hidden' }}>
             <div className="ch-img-wrap" style={{ width: '100%', height: '100%' }}>
               <div className="ch-img portrait-hover" style={{ width: '100%', height: '100%' }}>
                 <PortraitPlaceholder name={leadership.chairperson.name} role={leadership.chairperson.role} image={leadership.chairperson.image} linkedin={leadership.chairperson.linkedin} />
@@ -455,15 +456,15 @@ export function Team() {
         </div>
 
         {/* VICE CHAIRPERSON */}
-        <div className="vcp-section grid" style={{ marginTop: '10rem', alignItems: 'center' }}>
-          <div className="col-span-5 col-start-2 vcp-text" style={{ textAlign: 'right', position: 'relative' }}>
+        <div className="vcp-section grid mobile-col" style={{ marginTop: '10rem', alignItems: 'center' }}>
+          <div className="col-span-5 col-start-2 vcp-text mobile-text-center mobile-w-full" style={{ textAlign: 'right', position: 'relative' }}>
             <div style={{ fontSize: '2rem', fontWeight: 800, color: '#EAF1FF', position: 'absolute', top: '-3rem', right: '-1rem', zIndex: 0 }}>02</div>
             <div style={{ position: 'relative', zIndex: 1 }}>
               <div style={{ fontSize: '0.9rem', fontWeight: 700, letterSpacing: '0.15em', color: '#24B8A8', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{leadership.viceChairperson.role}</div>
-              <div style={{ fontSize: '3.5rem', fontWeight: 800, color: '#071A4A', lineHeight: 1 }}>{leadership.viceChairperson.name}</div>
+              <div className="section-title-responsive" style={{ fontSize: '3.5rem', fontWeight: 800, color: '#071A4A', lineHeight: 1 }}>{leadership.viceChairperson.name}</div>
             </div>
           </div>
-          <div className="col-span-5 col-start-8" style={{ height: '500px', overflow: 'hidden' }}>
+          <div className="col-span-5 col-start-8 mobile-w-full mobile-h-sm" style={{ height: '500px', overflow: 'hidden' }}>
             <div className="vcp-img-wrap" style={{ width: '100%', height: '100%' }}>
               <div className="vcp-img portrait-hover" style={{ width: '100%', height: '100%' }}>
                 <PortraitPlaceholder name={leadership.viceChairperson.name} role={leadership.viceChairperson.role} image={leadership.viceChairperson.image} linkedin={leadership.viceChairperson.linkedin} />
@@ -473,9 +474,9 @@ export function Team() {
         </div>
 
         {/* SUB CORE */}
-        <div className="sub-core-section grid" style={{ marginTop: '10rem', rowGap: '4rem' }}>
+        <div className="sub-core-section grid mobile-col" style={{ marginTop: '10rem', rowGap: '4rem' }}>
           {/* Secretary */}
-          <div className="col-span-4 sub-core-item">
+          <div className="col-span-4 sub-core-item mobile-w-full">
             <div className="portrait-hover" style={{ height: '480px', marginBottom: '1.5rem' }}>
                <PortraitPlaceholder name={leadership.secretary.name} role={leadership.secretary.role} image={leadership.secretary.image} linkedin={leadership.secretary.linkedin} />
             </div>
@@ -484,7 +485,7 @@ export function Team() {
           </div>
           
           {/* Joint Secretary */}
-          <div className="col-span-4 sub-core-item" style={{ marginTop: '6rem' }}>
+          <div className="col-span-4 sub-core-item mobile-w-full mobile-mt-lg" style={{ marginTop: '6rem' }}>
             <div className="portrait-hover" style={{ height: '380px', marginBottom: '1.5rem' }}>
                <PortraitPlaceholder name={leadership.jointSecretary.name} role={leadership.jointSecretary.role} image={leadership.jointSecretary.image} linkedin={leadership.jointSecretary.linkedin} />
             </div>
@@ -493,7 +494,7 @@ export function Team() {
           </div>
           
           {/* Treasurer */}
-          <div className="col-span-4 sub-core-item" style={{ marginTop: '2rem' }}>
+          <div className="col-span-4 sub-core-item mobile-w-full mobile-mt-lg" style={{ marginTop: '2rem' }}>
             <div className="portrait-hover" style={{ height: '420px', marginBottom: '1.5rem' }}>
                <PortraitPlaceholder name={leadership.treasurer.name} role={leadership.treasurer.role} image={leadership.treasurer.image} linkedin={leadership.treasurer.linkedin} />
             </div>
@@ -504,7 +505,7 @@ export function Team() {
       </section>
 
       {/* 12. DEPARTMENTS */}
-      <section className="departments-section" style={{ padding: '8rem 4rem', backgroundColor: '#FFFFFF', position: 'relative' }}>
+      <section className="departments-section mobile-p-none" style={{ padding: '8rem 4rem', backgroundColor: '#FFFFFF', position: 'relative' }}>
         
         {/* Global Hover CSS for member cards */}
         <style>{`
@@ -514,23 +515,24 @@ export function Team() {
           .dept-member:hover .member-info { transform: translateY(-5px); }
           .dept-member:hover .member-hover-line { width: 100% !important; }
           .dept-member:hover .placeholder-info, .dept-member:active .placeholder-info { opacity: 1 !important; transform: translateY(0) !important; }
+          .dept-member:hover .linkedin-link, .dept-member:active .linkedin-link { opacity: 1 !important; transform: translateY(0) !important; }
           .member-photo-container img { transition: transform 0.4s ease; }
           .linkedin-link:hover { background: #1649C7 !important; transform: scale(1.1) !important; }
         `}</style>
         
         {/* Scroll Progress Line */}
-        <div style={{ position: 'absolute', left: '4rem', top: '15rem', bottom: '8rem', width: '1px', background: '#EAF1FF', zIndex: 0 }}>
+        <div className="desktop-only" style={{ position: 'absolute', left: '4rem', top: '15rem', bottom: '8rem', width: '1px', background: '#EAF1FF', zIndex: 0 }}>
           <div className="dept-scroll-indicator" style={{ position: 'absolute', top: 0, left: '-4px', width: '9px', height: '9px', borderRadius: '50%', background: '#24B8A8' }}></div>
         </div>
 
         <div className="grid">
-          <div className="col-span-12 dept-header" style={{ marginBottom: '6rem', marginLeft: '3rem' }}>
+          <div className="col-span-12 dept-header dept-content-wrapper" style={{ marginBottom: '6rem' }}>
             <h2 style={{ fontSize: '3.5rem', fontWeight: 800, color: '#071A4A', lineHeight: 1.1, marginTop: '1rem' }}>
               THE PEOPLE<br/>WHO MAKE IT HAPPEN.
             </h2>
           </div>
           
-          <div className="col-span-12" style={{ marginLeft: '3rem' }}>
+          <div className="col-span-12 dept-content-wrapper">
             {departments.map((dept) => (
               <div key={dept.id} className="dept-row" style={{ paddingBottom: '6rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -543,6 +545,15 @@ export function Team() {
                   <p className="dept-desc" style={{ fontSize: '1.1rem', color: '#718096', margin: '0.5rem 0 0 0', position: 'relative', zIndex: 1, maxWidth: '600px', fontWeight: 500 }}>
                     {dept.description}
                   </p>
+                  
+                  {/* Mobile swipe indicator */}
+                  <div className="mobile-swipe-indicator">
+                    SWIPE TO VIEW
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </div>
                 </div>
                 
                 <div className="dept-divider" style={{ width: '100%', height: '1px', background: '#EAF1FF', marginTop: '1.5rem', marginBottom: '1.5rem' }}></div>

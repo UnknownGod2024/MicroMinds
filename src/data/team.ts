@@ -75,7 +75,7 @@ export const departments: Department[] = [
       { name: "Arnav Bhandari", role: "Creatives Head", image: "/team/Arnav_Bhandari.jpg", linkedin: "https://linkedin.com/in/arnav-bhandari-78b187314" }
     ],
     subHeads: [
-      { name: "Samuel Gonsalves", role: "Sub Head", image: "/team/Samuel_Gonsalves.png", linkedin: "https://linkedin.com/in/samuel-gonsalves-a04608346" },
+      { name: "Samuel Gonsalves", role: "Sub Head", image: "/team/Samuel.png", linkedin: "https://linkedin.com/in/samuel-gonsalves-4043b3337" },
       { name: "Soham Chopade", role: "Sub Head", image: "/team/Soham%20Chopade.png", linkedin: "https://www.linkedin.com/in/soham-chopade-4870a8419?utm_source=share_via&utm_content=profile&utm_medium=member_android" }
     ]
   },
@@ -86,7 +86,7 @@ export const departments: Department[] = [
     heads: [{ name: "Tanush Shah", role: "Sponsorship Head", image: "/team/Tanush.jpg" }],
     subHeads: [
       { name: "Aadit Dani", role: "Sub Head", image: "/team/Aadit.png", linkedin: "https://linkedin.com/in/aadit-dani-5a5739255" },
-      { name: "Geetansh Daga", role: "Sub Head", image: "/team/Geetansh_Daga.jpeg", linkedin: "https://linkedin.com/in/geetansh-daga-84892b372" }
+      { name: "Geetansh Daga", role: "Sub Head", image: "/team/Geetansh.jpeg", linkedin: "https://linkedin.com/in/geetansh-daga-84892b372" }
     ]
   },
   {

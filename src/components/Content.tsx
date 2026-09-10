@@ -239,7 +239,7 @@ export function Content() {
     <div ref={containerRef} style={{ backgroundColor: '#040D14', color: '#F8FAFC' }}>
       
       {/* GLOBAL CONTINUOUS SIGNAL */}
-      <svg style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 1 }}>
+      <svg className="mobile-hidden" style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 1 }}>
         <path 
           className="global-signal-path"
           d="M 50 0 L 50 150 L 20 180 L 20 800 L 90 870 L 90 2000" 
@@ -276,7 +276,7 @@ export function Content() {
            </svg>
         </div>
 
-        <div className="hero-content-area w-full" style={{ position: 'relative', zIndex: 1, paddingLeft: '4rem', gridTemplateColumns: '4fr 8fr', display: 'grid' }}>
+        <div className="hero-content-area w-full" style={{ position: 'relative', zIndex: 1 }}>
           
           <div className="flex flex-col justify-center relative">
             <h1 className="text-hero" ref={heroTextRef} style={{ display: 'inline-block', perspective: 1000, lineHeight: 0.85, margin: 0, marginTop: '4rem' }}>
