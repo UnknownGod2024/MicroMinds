@@ -159,7 +159,7 @@ export function Vision() {
       </svg>
 
       {/* 4. VISION HERO */}
-      <section id="vision-hero" style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '4rem', paddingLeft: '4rem', paddingRight: '4rem', position: 'relative' }}>
+      <section id="vision-hero" className="hero-section" style={{ minHeight: '100vh', paddingTop: '12rem', paddingBottom: '4rem', paddingLeft: '4rem', paddingRight: '4rem', position: 'relative' }}>
         
         {/* Subtle background circuits */}
         <svg className="vision-circuit-lines" style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', pointerEvents: 'none', zIndex: 0, opacity: 0.15 }}>
@@ -175,13 +175,13 @@ export function Vision() {
           </div>
           
           <div style={{ flex: 1 }}>
-            <h1 style={{ fontSize: 'clamp(4rem, 10vw, 12rem)', fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.04em', color: '#071A4A', margin: 0 }}>
-              <div style={{ overflow: 'hidden', paddingBottom: '0.1em' }}>
+            <h1 style={{ fontSize: 'clamp(4rem, 10vw, 12rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.04em', color: '#071A4A', margin: 0 }}>
+              <div style={{ overflow: 'hidden', paddingTop: '0.2em', paddingBottom: '0.1em', marginTop: '-0.2em' }}>
                 <div className="vision-our" style={{ display: 'flex' }}>
                    {['O','U','R'].map((char, i) => <span key={`our-${i}`} className="hero-char" style={{ display: 'inline-block' }}>{char}</span>)}
                 </div>
               </div>
-              <div style={{ overflow: 'hidden', paddingBottom: '0.1em' }}>
+              <div style={{ overflow: 'hidden', paddingTop: '0.2em', paddingBottom: '0.1em', marginTop: '-0.2em' }}>
                 <div className="vision-vision" style={{ color: '#1649C7', display: 'flex' }}>
                    {['V','I','S','I','O','N'].map((char, i) => <span key={`vis-${i}`} className="hero-char" style={{ display: 'inline-block' }}>{char}</span>)}
                 </div>
@@ -190,13 +190,16 @@ export function Vision() {
             
             <div className="vision-underline" style={{ height: '4px', width: 'clamp(200px, 40vw, 600px)', background: '#24B8A8', marginTop: '1rem', marginBottom: '3rem' }}></div>
             
-            <div className="vision-hero-footer">
-              <p className="vision-hero-desc" style={{ fontSize: '1.5rem', lineHeight: 1.6, color: '#071A4A', fontWeight: 500, maxWidth: '500px' }}>
+            <div className="vision-hero-footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '2rem' }}>
+              <p className="vision-hero-desc" style={{ fontSize: '1.5rem', lineHeight: 1.6, color: '#071A4A', fontWeight: 500, maxWidth: '500px', margin: 0 }}>
                 Building talent. Creating impact.<br/>
                 <span style={{ color: '#718096' }}>Strengthening India's chip ecosystem.</span>
               </p>
-              <div className="vision-hero-logo" style={{ display: 'flex', justifyContent: 'flex-end', opacity: 0.1 }}>
-                 <img src="/logo_2.png" alt="MicroMinds Logo" style={{ height: '200px', filter: 'invert(1)' }} />
+              
+              <div className="vision-hero-extra-text" style={{ maxWidth: '450px' }}>
+                <p style={{ fontSize: '1.1rem', lineHeight: 1.6, color: '#475569', margin: 0 }}>
+                  MicroMinds is committed to advancing hardware innovation. We bridge the gap between academic theory and silicon reality, empowering the next generation of VLSI engineers.
+                </p>
               </div>
             </div>
           </div>

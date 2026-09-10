@@ -80,7 +80,7 @@ export const Projects = () => {
 
 
       {/* 1. PAGE HERO */}
-      <section style={{ padding: '12rem 4rem 8rem 4rem', position: 'relative', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <section className="hero-section" style={{ padding: '12rem 4rem 8rem 4rem', position: 'relative', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         {/* Subtle background lines */}
         <svg style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '100%', opacity: 0.2, pointerEvents: 'none' }}>
            <path className="bg-circuit-line" d="M -200 100 L 400 100 L 600 300 L 1400 300" fill="none" stroke="var(--color-teal)" strokeWidth="1" strokeDasharray="200" strokeDashoffset="200" />
@@ -88,9 +88,18 @@ export const Projects = () => {
         </svg>
 
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          <h1 style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', lineHeight: 0.9, margin: 0, marginBottom: '2rem', perspective: '1000px' }}>
-            <div style={{ overflow: 'hidden' }}><div className="proj-hero-word" style={{ display: 'inline-block' }}>WHAT</div> <div className="proj-hero-word" style={{ display: 'inline-block' }}>WE'RE</div></div>
-            <div style={{ overflow: 'hidden' }}><div className="proj-hero-word" style={{ display: 'inline-block', color: 'var(--color-teal)' }}>BUILDING.</div></div>
+          <h1 style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', fontWeight: 900, fontFamily: 'var(--font-creative)', lineHeight: 1, margin: 0, marginBottom: '2rem', perspective: '1000px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.2em' }}>
+              <div style={{ overflow: 'hidden', paddingTop: '0.2em', paddingBottom: '0.1em', marginTop: '-0.2em' }}>
+                <div className="proj-hero-word" style={{ display: 'inline-block' }}>WHAT</div>
+              </div>
+              <div style={{ overflow: 'hidden', paddingTop: '0.2em', paddingBottom: '0.1em', marginTop: '-0.2em' }}>
+                <div className="proj-hero-word" style={{ display: 'inline-block' }}>WE'RE</div>
+              </div>
+            </div>
+            <div style={{ overflow: 'hidden', paddingTop: '0.2em', paddingBottom: '0.1em', marginTop: '-0.2em' }}>
+              <div className="proj-hero-word" style={{ display: 'inline-block', color: 'var(--color-teal)' }}>BUILDING.</div>
+            </div>
           </h1>
           <h3 className="proj-hero-sub" style={{ fontSize: '1.5rem', fontWeight: 500, color: '#94A3B8', letterSpacing: '0.05em', margin: 0 }}>
             Ideas become experiments. Experiments become projects.
@@ -206,12 +215,12 @@ export const Projects = () => {
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, fontFamily: 'var(--font-creative)', margin: 0, marginBottom: '4rem' }}>FROM RTL TOWARD SILICON.</h2>
           
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', alignItems: 'center', marginBottom: '6rem' }}>
+          <div className="rtl-flow-container">
             {['RTL', 'VERIFICATION', 'FPGA', 'PPA', 'PHYSICAL IMPLEMENTATION'].map((step, index, arr) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+              <div key={index} className="rtl-flow-item">
                 <span className="flow-step" style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '0.1em', color: '#E2E8F0' }}>{step}</span>
                 {index < arr.length - 1 && (
-                  <span className="flow-step" style={{ color: 'var(--color-teal)', fontSize: '1.5rem' }}>&rarr;</span>
+                  <span className="flow-step rtl-flow-arrow" style={{ color: 'var(--color-teal)', fontSize: '1.5rem' }}>&rarr;</span>
                 )}
               </div>
             ))}

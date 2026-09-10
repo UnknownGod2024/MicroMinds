@@ -1523,7 +1523,7 @@ section {
     align-items: center;
     gap: 0.25rem;
     position: fixed;
-    top: 70px; /* below the navbar */
+    top: 85px; /* below the navbar */
     left: 0;
     right: 0;
     z-index: 99;
@@ -1633,6 +1633,10 @@ section {
   /* ===== Section padding ===== */
   section {
     padding: 5rem 1.5rem !important;
+  }
+  
+  .hero-section {
+    padding-top: 10rem !important;
   }
 }
 
@@ -2037,3 +2041,36 @@ section {
   }
 }
 
+/* ===== RTL FLOW DIAGRAM ===== */
+.rtl-flow-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.rtl-flow-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .rtl-flow-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .rtl-flow-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .rtl-flow-arrow {
+    transform: rotate(90deg);
+    margin-left: 1rem;
+    margin-bottom: -0.5rem;
+    margin-top: -0.5rem;
+  }
+}
