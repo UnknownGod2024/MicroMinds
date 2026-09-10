@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { events } from '../data/events';
 import type { EventData } from '../data/events';
 import { EventModal } from './EventModal';
@@ -13,10 +13,7 @@ export const Events = () => {
   return (
     <div style={{ padding: '8rem 2rem', color: '#F8FAFC', background: '#040D14', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ width: '100%', maxWidth: '1200px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
-          <h1 style={{ fontSize: '4rem', fontWeight: 800, margin: 0, lineHeight: 1 }}>THE SILICON LOG</h1>
-          <Link to="/" className="btn" style={{ borderColor: 'rgba(255,255,255,0.2)', marginBottom: '0.5rem' }}>&larr; BACK TO HOME</Link>
-        </div>
+        <h1 style={{ fontSize: '4rem', fontWeight: 800, margin: 0, marginBottom: '4rem', lineHeight: 1 }}>THE SILICON LOG</h1>
         
         <div className="event-grid">
           {pastEvents.map(event => (

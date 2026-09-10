@@ -773,6 +773,19 @@ section {
   overflow: hidden;
 }
 
+@media (max-width: 900px) {
+  .editorial-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "num title"
+      "desc desc";
+    padding: 3rem 0;
+  }
+  .editorial-number { grid-area: num; }
+  .editorial-title { grid-area: title; }
+  .editorial-desc { grid-area: desc; }
+}
+
 .editorial-number {
   font-family: var(--font-creative);
   font-size: 4rem;
