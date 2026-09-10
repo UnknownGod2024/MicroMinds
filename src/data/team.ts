@@ -33,7 +33,7 @@ export const leadership = {
     linkedin: "https://linkedin.com/in/kalash-bheda"
   },
   secretary: {
-    name: "Shushant Singh",
+    name: "Sushant Singh",
     role: "Secretary",
     image: "/team/Sushant.jpg",
     linkedin: "https://linkedin.com/in/sushant450"
